@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    hostname: postgres
+    container_name: nettasec-landing-api
+    environment:
+      - POSTGRES_DB=nettasec-landing
+      - POSTGRES_USER=nettasec
+      - POSTGRES_PASSWORD=n1t2t3a4s5e6c
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./waitlists.sql:/docker-entrypoint-initdb.d/waitlists.sql
+    ports:
+      - "5435:5432"
+    restart: always
+
+  app:
+    build: .
+    container_name: golang_nettasec-landing-api
+    ports:
+      - "9898:9898"
+    restart: on-failure
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+volumes:
+  pgdata:
