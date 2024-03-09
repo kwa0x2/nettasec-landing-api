@@ -2,9 +2,11 @@ FROM golang:1.21.5
 
 WORKDIR /go/src/nettasec.co.uk/landing/backend
 
-COPY . .
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
 
-RUN go get -v
+COPY . .
 
 RUN go build -o main .
 

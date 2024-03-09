@@ -28,7 +28,7 @@ func CreateWaitlist(ctx *gin.Context) {
 	config.DB.Model(&models.Waitlists{}).Where("email = ?", waitlist.Email).Count(&count)
 
 	if count  > 0 {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Email must be unique"})
+		ctx.JSON(http.StatusConflict, gin.H{"error": "Email must be unique"})
 		return
 	}
 
@@ -42,5 +42,4 @@ func CreateWaitlist(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, gin.H{"rowAffected": result.RowsAffected})
 	
 
-	ctx.JSON(http.StatusCreated, gin.H{"data": result})
 }

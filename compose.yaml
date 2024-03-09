@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: golang_nettasec-landing-api
+    ports:
+      - "9898:9898"
+    restart: on-failure
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
   postgres:
     image: postgres:latest
     hostname: postgres
@@ -15,17 +28,6 @@ services:
     ports:
       - "5435:5432"
     restart: always
-
-  app:
-    build: .
-    container_name: golang_nettasec-landing-api
-    ports:
-      - "9898:9898"
-    restart: on-failure
-    depends_on:
-      - postgres
-    links:
-      - postgres
 
 volumes:
   pgdata:

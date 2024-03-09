@@ -11,7 +11,7 @@ import (
 var DB *gorm.DB
 
 func Connection() {
-	db, err := gorm.Open(postgres.Open("postgres://nettasec:n1t2t3a4s5e6c@postgres/nettasec-landing?sslmode=disable"), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open("postgres://nettasec:n1t2t3a4s5e6c@localhost:5435/nettasec-landing?sslmode=disable"), &gorm.Config{})
 
 	if err != nil {
 		panic(err)
