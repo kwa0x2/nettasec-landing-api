@@ -19,12 +19,10 @@ func main() {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	// ALLOWED_IPS değerini al
 	allowedIPs := os.Getenv("ALLOWED_IPS")
 	allowedIPList := strings.Split(allowedIPs, ",")
 	fmt.Print("ips", allowedIPList)
 
-	// CORS ayarları
 	router := gin.New()
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     allowedIPList,
@@ -34,5 +32,5 @@ func main() {
 	}))
 	config.Connection()
 	routes.WaitlistRoute(router)
-	router.Run(":9898")
+	router.RunTLS(":9898", "myndfin.crt", "myndfin.key")
 }
